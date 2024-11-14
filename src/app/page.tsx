@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import {link} from "node:fs";
+import Link from 'next/link'
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
@@ -116,18 +118,33 @@ export default function Login() {
                         </div>
                     )}
 
-                    <button
-                        style={{ backgroundColor: '#370013' }}
-                        className="w-full py-2 mt-6 text-white rounded-md hover:opacity-90 transition-opacity">
-                        {isLogin ? 'Entrar' : 'Criar Conta'}
-                    </button>
-
-                    <p className="text-sm text-slate-600 mt-4">
-                        {isLogin ? 'Não tem uma conta?' : 'Já tem uma conta?'}
-                        <button onClick={toggleAuthMode} className="text-blue-600 hover:underline ml-1">
-                            {isLogin ? 'Criar Conta' : 'Entrar'}
-                        </button>
-                    </p>
+                    {
+                        isLogin
+                            ?
+                            <div>
+                                <Link href="/inicial">
+                                    <button
+                                        style={{ backgroundColor: '#370013' }}
+                                        className="w-full py-2 mt-6 text-white rounded-md hover:opacity-90 transition-opacity">
+                                        {isLogin ? 'Entrar' : 'Criar Conta'}
+                                    </button>
+                                </Link>
+                                <div className="flex justify-center mt-4">
+                                    <Link href="/" onClick={toggleAuthMode} className="text-center">
+                                        Não tem uma conta?
+                                    </Link>
+                                </div>
+                            </div>
+                            :
+                            <div className="mt-4">
+                                <button
+                                    style={{ backgroundColor: '#370013' }}
+                                    onClick={toggleAuthMode}
+                                    className="w-full py-3 px-6 mt-6 text-white rounded-md hover:opacity-90 transition-opacity">
+                                    {isLogin ? 'Criar Conta' : 'Criar conta e fazer login'}
+                                </button>
+                            </div>
+                    }
                 </div>
             </div>
         </main>

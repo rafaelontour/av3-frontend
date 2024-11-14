@@ -14,7 +14,7 @@ export default function Home() {
 
     const [ open, setOpen ] = useState(false);
     const [ placeholderVisible, setPlaceholderVisible ] = useState(false);
-    
+
     // Função para tirar o foco do input, tirar a visibilidade do placeholder e fechar o menu lateral
     const handleBlur = () => {
         const input = document.querySelector('.input_search') as HTMLInputElement;
@@ -27,7 +27,7 @@ export default function Home() {
     return (
         <div className="flex flex-1 h-screen">
             <Sidebar open={open} setOpen={setOpen}>
-                <SidebarBody 
+                <SidebarBody
                     onMouseLeave={handleBlur}
                     onMouseOver={() => setPlaceholderVisible(true)}
                     className={style.sidebar}
@@ -37,20 +37,20 @@ export default function Home() {
                             <div className="flex mb-8 gap-2 items-center">
                                 <Image
                                     src="https://picsum.photos/200"
-                                    alt="Foto do usuário" 
+                                    alt="Foto do usuário"
                                     className="
                                         rounded-[13px]
                                     "
                                     width={60}
                                     height={60}
                                 />
-                                
+
                                 <div className="flex flex-col">
                                     <motion.span
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         className="font-medium text-black dark:text-white whitespace-pre flex flex-col"
-                                    >   
+                                    >
                                         <span className="font-semibold text-sm">
                                             Nome do usuário
                                         </span>
@@ -60,7 +60,6 @@ export default function Home() {
                                     </motion.span>
                                 </div>
                             </div>
-
                             <IconSearch size={22} className="absolute translate-y-1/2 ml-[13px] mt-[2px]" stroke={3} />
                             <input
                                 placeholder={placeholderVisible ? "Pesquisar..." : ""}
@@ -71,7 +70,6 @@ export default function Home() {
                                 `}
                             />
                         </div>
-
                         <div className="mt-7 flex flex-col gap-2">
                             <div className="flex flex-col gap-3 ml-[-5px]">
                                 {links.map((link, idx) => (
@@ -82,9 +80,7 @@ export default function Home() {
                                 ))}
                             </div>
                         </div>
-                        
                     </div>
-
                     <div className="flex flex-col items-start gap-2 pl-[8px] mb-3">
                         <SidebarLink
                             link={{
@@ -93,10 +89,9 @@ export default function Home() {
                                 icon: <IconLogout size={32} className="text-neutral-700 dark:text-neutral-200  flex-shrink-0" />
                             }}
                         />
-                        
                         <ThemeToggle />
                     </div>
-                </SidebarBody>  
+                </SidebarBody>
             </Sidebar>
 
             <div className="flex flex-col flex-1 w-full h-screen">
