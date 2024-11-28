@@ -1,0 +1,83 @@
+.titulo {
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    font-size: 1.3em; 
+    font-weight: 500;
+    color: #212121; 
+    margin-bottom: 20px;
+    font-weight: bolder;
+  }
+
+  .caixaPesquisa {
+    margin-left: 22%;
+    outline: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    text-align: left;
+  }
+  
+  .iconeCinza {
+    color: #808080;
+  }
+
+  .tabela th {
+    color: #808080;
+  }
+
+  .tabela td {
+    border-left: none; 
+    border-right: none; 
+    border-bottom: 1px solid #f5f5f5; 
+  }
+
+  .statusAprovado {
+    background-color: #DCFCE7; 
+    color: #16A34A;
+    padding: 3%;
+    border-radius: 7px;
+    text-align: center;
+    border: 2px solid #16a34a2d;
+  }
+  
+  .statusExcluido {
+    background-color: #FEE2E2; 
+    color: #DC2626;
+    padding: 3%;
+    border-radius: 7px;
+    text-align: center;
+    border: 2px solid #dc262628;
+  }
+  
+  .statusDesativado {
+    background-color: #FDE68A; 
+    color: #f45900;    
+    padding: 3%;
+    border-radius: 7px;
+    text-align: center;
+    border: 2px solid #ff5e0033;
+  }
+  
+  .statusPendente {
+    background-color: #70bbcc37; 
+    color: #5a5b5c; 
+    padding: 3%;
+    border-radius: 7px;
+    text-align: center;
+    border: 2px solid #5a5b5c2c;
+  }
+
+  .pagination button {
+    @apply px-3 py-1 mx-1 border rounded-md;
+    margin-bottom: 20px;
+  }
+  
+  .pagination button.active {
+    @apply bg-blue-500 text-white;
+  }
+
+  .perPage {
+    margin-left: 15px;
+  }
+
+  .perPage select {
+    outline: none;
+  }

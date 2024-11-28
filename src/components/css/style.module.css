@@ -114,7 +114,3 @@
 .input:checked + .slider:before {
   transform: translateX(30px);
 }
-
-.sombra_sm {
-    box-shadow: 0 0 4px rgba(0, 0, 0, .5);
-}

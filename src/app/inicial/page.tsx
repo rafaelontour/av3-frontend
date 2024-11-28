@@ -4,16 +4,18 @@ import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import links from "@/components/data/constants/LinksAdmin";
 import { IconLogout, IconSearch } from "@tabler/icons-react";
 
-import style from '@/components/css/style.module.css'
+import style from '@/components/css/style.module.css';
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
 import Image from "next/image";
+import GerenciarUsuarios from '@/components/GerenciarUsuarios';
 
 export default function Home() {
 
     const [ open, setOpen ] = useState(false);
     const [ placeholderVisible, setPlaceholderVisible ] = useState(false);
+    const [activeComponent, setActiveComponent] = useState<string>('dashboard');
 
     // Função para tirar o foco do input, tirar a visibilidade do placeholder e fechar o menu lateral
     const handleBlur = () => {
@@ -76,6 +78,8 @@ export default function Home() {
                                     <SidebarLink
                                         key={idx}
                                         link={link}
+                                        setActiveComponent={setActiveComponent} 
+                                        linkId={link.id} 
                                     />
                                 ))}
                             </div>
@@ -88,6 +92,8 @@ export default function Home() {
                                 href: "/",
                                 icon: <IconLogout size={32} className="text-neutral-700 dark:text-neutral-200  flex-shrink-0" />
                             }}
+                            setActiveComponent={setActiveComponent} 
+                            linkId={"Sair"} 
                         />
                         <ThemeToggle />
                     </div>
@@ -95,7 +101,10 @@ export default function Home() {
             </Sidebar>
 
             <div className="flex flex-col flex-1 w-full h-screen">
-                {/* Conteúdo da página */}
+                {/* Renderização condicional dos componentes */}
+                {activeComponent === 'usuarios' && <GerenciarUsuarios />}
+                {activeComponent === 'auditorios' && <div>Componente Auditórios</div>} 
+                {activeComponent === 'dashboard' && <div>Componente Dashboard</div>} 
             </div>
         </div>
     );

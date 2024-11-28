@@ -158,11 +158,15 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
   link,
   className,
+  setActiveComponent,
+  linkId,
   ...props
 }: {
   link: Links;
   className?: string;
   props?: LinkProps;
+  setActiveComponent: (component: string) => void;
+  linkId: string;
 }) => {
   const { open, animate } = useSidebar();
   return (
@@ -170,6 +174,7 @@ export const SidebarLink = ({
       href={link.href}
       style={{ 
         transition: "all 0.3s ease-in-out" 
+        
       }}
       className={
         cn(
@@ -177,6 +182,7 @@ export const SidebarLink = ({
         className
       )}
       {...props}
+      onClick={() => setActiveComponent(linkId)}
     >
       {link.icon}
 
