@@ -101,7 +101,7 @@ const GerenciarUsuarios: React.FC = () => {
               <td className="border px-4 py-2">{user.email}</td>
               <td className="border px-4 py-2">{user.perfil}</td>
               <td className={`border px-4 py-2`}>
-                <div className={getStatusClass(user.status)}>
+                <div className={`${getStatusClass(user.status)} ${styles.statusLabel}`}>
                   {user.status}
                 </div>
               </td>
@@ -130,7 +130,7 @@ const GerenciarUsuarios: React.FC = () => {
               <button
                 key={pageNumber}
                 onClick={() => handleChangePage(pageNumber)}
-                className={pageNumber === page ? 'bg-blue-500 text-white' : ''}
+                className={pageNumber === page ? 'bg-purple-500 text-white' : ''}
               >
                 {pageNumber}
               </button>
