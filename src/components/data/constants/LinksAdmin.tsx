@@ -15,14 +15,7 @@ const links = [
       icon: 
         <IconUsersGroup size={32} />
 
-    },
-    {
-      id: 'dashboard',
-      label: "Dashboard",
-      href: "#" ,
-      icon: 
-        <IconHome size={32} />
-    },
+    }
 ];
 
 export default links;

@@ -10,12 +10,13 @@ import { motion } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
 import Image from "next/image";
 import GerenciarUsuarios from '@/components/GerenciarUsuarios';
+import GerenciarReservas from '@/components/GerenciarReservas';
 
 export default function Home() {
 
     const [ open, setOpen ] = useState(false);
     const [ placeholderVisible, setPlaceholderVisible ] = useState(false);
-    const [activeComponent, setActiveComponent] = useState<string>('dashboard');
+    const [activeComponent, setActiveComponent] = useState<string>('auditorios');
 
     // Função para tirar o foco do input, tirar a visibilidade do placeholder e fechar o menu lateral
     const handleBlur = () => {
@@ -103,7 +104,7 @@ export default function Home() {
             <div className="flex flex-col flex-1 w-full h-screen">
                 {/* Renderização condicional dos componentes */}
                 {activeComponent === 'usuarios' && <GerenciarUsuarios />}
-                {activeComponent === 'auditorios' && <div>Componente Auditórios</div>} 
+                {activeComponent === 'auditorios' && <GerenciarReservas />} 
                 {activeComponent === 'dashboard' && <div>Componente Dashboard</div>} 
             </div>
         </div>

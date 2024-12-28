@@ -1,0 +1,41 @@
+/* GerenciarReservas.module.css */
+
+.container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .reserva {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .imagem {
+    width: 30%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: width 0.3s ease;
+  }
+
+  .imagem:hover {
+    width: 40%;
+    transition: width 0.4s ease;
+  }
+  
+  .reserva h2 {
+    font-size: 1.5em;
+    color: #007BFF;
+    margin-bottom: 10px;
+  }
+  
+  .reserva p {
+    margin: 5px 0;
+    font-size: 1em;
+  }
+  

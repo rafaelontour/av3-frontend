@@ -29,15 +29,18 @@ const getStatusClass = (status: string) => {
 };
 
 const GerenciarUsuarios: React.FC = () => {
-
   const [users, setUsers] = useState(usuarios);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [search, setSearch] = useState('');
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>)   => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
   const filteredUsers = users.filter((user) => {
@@ -55,22 +58,49 @@ const GerenciarUsuarios: React.FC = () => {
   const totalPages = Math.ceil(filteredUsers.length / rowsPerPage);
   const indexOfLastUser = page * rowsPerPage;
   const indexOfFirstUser = indexOfLastUser - rowsPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);   
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
   const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLSelectElement>)   => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(1);
+  };
+
+  const handleStatusClick = (user: User) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
+
+  const handleStatusChange = (status: string) => {
+    if (selectedUser) {
+      const updatedUsers = users.map((user) =>
+        user.id === selectedUser.id ? { ...user, status } : user
+      );
+      setUsers(updatedUsers);
+      setConfirmationMessage(`O usuário ${selectedUser.nome} foi alterado para ${status}`);
+      closeModal();
+      setConfirmationModalOpen(true);
+      setTimeout(() => {
+        setConfirmationModalOpen(false);
+        setConfirmationMessage(null);
+      }, 3000); // A confirmação desaparece após 3 segundos
+    }
   };
 
   return (
     <div>
       <div className="flex items-center">
-        <h1 className={styles.titulo + " mt-5 ml-6"} >Gerenciar Usuários</h1>
-        <div className={styles.caixaPesquisa}> 
-        <IconSearch size={22} className={`absolute translate-y-1/2 ml-[10px] mt-[-10px] ${styles.iconeCinza}`} stroke={3} />
+        <h1 className={styles.titulo + " mt-5 ml-6"}>Gerenciar Usuários</h1>
+        <div className={styles.caixaPesquisa}>
+          <IconSearch size={22} className={`absolute translate-y-1/2 ml-[10px] mt-[-10px] ${styles.iconeCinza}`} stroke={3} />
           <input
             type="text"
             placeholder="Pesquisar"
@@ -101,7 +131,11 @@ const GerenciarUsuarios: React.FC = () => {
               <td className="border px-4 py-2">{user.email}</td>
               <td className="border px-4 py-2">{user.perfil}</td>
               <td className={`border px-4 py-2`}>
-                <div className={`${getStatusClass(user.status)} ${styles.statusLabel}`}>
+                <div
+                  className={`${getStatusClass(user.status)} ${styles.statusLabel}`}
+                  onClick={() => handleStatusClick(user)}
+                  style={{ cursor: 'pointer' }}
+                >
                   {user.status}
                 </div>
               </td>
@@ -116,30 +150,77 @@ const GerenciarUsuarios: React.FC = () => {
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <option value="50">50</option>   
-
+            <option value="50">50</option>
           </select>
           {' '}
           Usuários por página
         </div>
         <div className={styles.pagination}>
-            <button onClick={() => handleChangePage(page - 1)} disabled={page === 1}>
-              &lt;
+          <button onClick={() => handleChangePage(page - 1)} disabled={page === 1}>
+            &lt;
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handleChangePage(pageNumber)}
+              className={pageNumber === page ? 'bg-purple-500 text-white' : ''}
+            >
+              {pageNumber}
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
-              <button
-                key={pageNumber}
-                onClick={() => handleChangePage(pageNumber)}
-                className={pageNumber === page ? 'bg-purple-500 text-white' : ''}
-              >
-                {pageNumber}
-              </button>
-            ))}
-            <button onClick={() => handleChangePage(page + 1)} disabled={page === totalPages}>
-              &gt;
-            </button>
-          </div>
+          ))}
+          <button onClick={() => handleChangePage(page + 1)} disabled={page === totalPages}>
+            &gt;
+          </button>
+        </div>
       </div>
+
+      {isModalOpen && selectedUser && (
+        <div className={`${styles.modalOverlay} ${isModalOpen ? styles.visible : ''}`} onClick={closeModal}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeButton} onClick={closeModal}>×</button>
+            <h2>
+              O usuário <strong>{selectedUser.nome}</strong> está com status <strong>{selectedUser.status}</strong>, deseja alterar para:
+            </h2>
+            <div className={styles.modalButtons}>
+              <button
+                className={styles.aprovadoBtn}
+                onClick={() => handleStatusChange('Aprovado')}
+              >
+                Aprovado
+              </button>
+              <button
+                className={styles.excluidoBtn}
+                onClick={() => handleStatusChange('Excluído')}
+              >
+                Excluído
+              </button>
+              <button
+                className={styles.desativadoBtn}
+                onClick={() => handleStatusChange('Desativado')}
+              >
+                Desativado
+              </button>
+              <button
+                className={styles.pendenteBtn}
+                onClick={() => handleStatusChange('Pendente')}
+              >
+                Pendente
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {confirmationModalOpen && (
+        <div className={`${styles.modalOverlay} ${confirmationModalOpen ? styles.visible : ''}`}>
+          <div className={styles.confirmationModalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.confirmationIcon}>
+              ✔️
+            </div>
+            {confirmationMessage}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
